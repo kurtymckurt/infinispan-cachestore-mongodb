@@ -101,6 +101,10 @@ public class MongoDBCacheImpl<K, V> implements MongoDBCache<K, V> {
     @Override
     public Set<byte[]> keySet() {
         DBCursor cursor = collection.find();
+        return getSetOfKeys(cursor);
+    }
+
+    public Set<byte[]> getSetOfKeys(DBCursor cursor) {
         Set<byte[]> keys = new HashSet<byte[]>();
 
         while (cursor.hasNext()) {
@@ -108,21 +112,27 @@ public class MongoDBCacheImpl<K, V> implements MongoDBCache<K, V> {
             byte[] key = (byte[]) o.get("_id");
             keys.add(key);
         }
-
         return keys;
     }
 
     @Override
-    public void removeExpiredData() {
+    public Set<byte[]> removeExpiredData(Set<byte[]> keys) {
         QueryBuilder queryBuilder = QueryBuilder.start();
 
+        BasicDBList inObject = new BasicDBList();
+        inObject.addAll(keys);
+
         queryBuilder
-                .put("expiryTime")
-                .lessThanEquals(new Date())
-                .greaterThan(new Date(-1));
+                .and(
+                    new QueryBuilder().start().put("expiryTime").lessThanEquals(new Date()).greaterThan(new Date(-1)).get(),
+                    new QueryBuilder().start().put("_id").in(inObject).get()
+                );
 
         DBObject query = queryBuilder.get();
+        DBCursor cursor = collection.find(query);
+        Set<byte[]> purgedKeys = getSetOfKeys(cursor);
         collection.remove(query);
+        return purgedKeys;
     }
 
     @Override

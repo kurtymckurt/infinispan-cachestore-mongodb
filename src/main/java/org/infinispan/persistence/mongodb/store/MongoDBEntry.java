@@ -11,8 +11,6 @@ import java.util.Date;
  * @author Gabriel Francisco <gabfssilva@gmail.com>
  */
 public class MongoDBEntry<K, V> {
-    private K key;
-    private V value;
 
     private byte[] keyBytes;
     private byte[] valueBytes;

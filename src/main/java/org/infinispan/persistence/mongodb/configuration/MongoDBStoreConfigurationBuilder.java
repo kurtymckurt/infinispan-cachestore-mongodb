@@ -12,13 +12,13 @@ import org.infinispan.configuration.cache.PersistenceConfigurationBuilder;
  */
 public class MongoDBStoreConfigurationBuilder extends AbstractStoreConfigurationBuilder<MongoDBStoreConfiguration, MongoDBStoreConfigurationBuilder> {
     private String hostname;
-    private int port;
+    private Integer port;
     private String database;
     private String collection;
     private String username;
     private String password;
-    private int timeout;
-    private int acknowledgment;
+    private Integer timeout;
+    private Integer acknowledgment;
 
     public MongoDBStoreConfigurationBuilder(PersistenceConfigurationBuilder builder) {
         super(builder);
@@ -58,7 +58,7 @@ public class MongoDBStoreConfigurationBuilder extends AbstractStoreConfiguration
         return self();
     }
 
-    public MongoDBStoreConfigurationBuilder port(int port) {
+    public MongoDBStoreConfigurationBuilder port(Integer port) {
         this.port = port;
         return self();
     }
@@ -83,12 +83,12 @@ public class MongoDBStoreConfigurationBuilder extends AbstractStoreConfiguration
         return self();
     }
 
-    public MongoDBStoreConfigurationBuilder timeout(int timeout) {
+    public MongoDBStoreConfigurationBuilder timeout(Integer timeout) {
         this.timeout = timeout;
         return self();
     }
 
-    public MongoDBStoreConfigurationBuilder acknowledgment(int acknowledgment) {
+    public MongoDBStoreConfigurationBuilder acknowledgment(Integer acknowledgment) {
         this.acknowledgment = acknowledgment;
         return self();
     }

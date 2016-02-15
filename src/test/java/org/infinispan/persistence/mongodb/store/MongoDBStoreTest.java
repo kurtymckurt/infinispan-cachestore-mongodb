@@ -33,7 +33,7 @@ public class MongoDBStoreTest extends BaseStoreTest {
     protected AdvancedLoadWriteStore createStore() throws Exception {
         String hostname = System.getProperty("MONGODB_HOSTNAME");
         if (hostname == null || "".equals(hostname)) {
-            hostname = "127.0.0.1";
+            hostname = "192.168.1.113";
         }
 
         int port = 27017;

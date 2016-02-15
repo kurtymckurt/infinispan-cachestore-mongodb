@@ -59,8 +59,10 @@ public interface MongoDBCache<K, V> {
     /**
      * This method must remove all data which are expired. <br/>
      * What means delete all entries that have the expiryTime parameter less than the current date.
+     * @param keys the keyset that it will check for purged entries.
+     * @return returns all the keys that were purged.
      */
-    void removeExpiredData();
+    Set<byte[]> removeExpiredData(Set<byte[]> keys);
 
     /**
      * Put an entry to the cache
